@@ -16,7 +16,7 @@ body {
 }
 .container {
     position: absolute;
-    cursor: url(myBall.cur),auto
+    cursor: pointer;
 }
 
 .container::after {
