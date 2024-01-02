@@ -1,0 +1,76 @@
+*{
+   margin : 0;
+   padding: 0; 
+   box-sizing: border-box;
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background:  #263AB5;
+    background-image: radial-gradient(circle, #263AB5 0%, #112E79 100%);
+    background-size:50px 50px;
+}
+.container {
+    position: absolute;
+    cursor: url(myBall.cur),auto
+}
+
+.container::after {
+    content:'BUON ANNO';
+    position: absolute;
+    left: 0;
+    top:-0.75em;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    font-size: 5em;
+    transition: 1s;
+    transform: translateY(100px);
+    opacity: 0;
+    filter: blur(30px);   
+}
+
+.container:hover::after {
+    transform: translateY(0px);
+    opacity: 1;
+    filter: blur(0px); 
+}
+
+.container span {
+    display: inline-block;
+    color: #fff;
+    font-size: 12em;
+    font-weight: bold;
+    transition: 2s;
+    filter: blur(1);
+}
+
+.container span:last-child {
+    color:#2367f0;
+}
+
+.container:hover span:last-child {
+    transform: rotate(45deg) translateY(-200px);
+    opacity: 0;
+    filter: blur(30px);
+}
+
+.container span:nth-child(3)::after {
+   content: '4'; 
+   position: absolute;
+   color: #dcf805;
+   transform: rotate(-45deg) translateY(200px);
+   opacity: 0;
+   filter:blur(30px);
+   transition: 2s;
+}
+.container:hover span:nth-child(3)::after {
+    transform: rotate(0deg) translateY(0px);
+    opacity: 1;
+    filter:blur(0px); 
+}
+
