@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gioco indovina la parola</title>
+<style>
+    body {
+        padding-top: 50px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        text-align: center;
+        color: aliceblue;
+        background: rgb(2,0,36);
+        background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+    }
+    h1 {
+        font-size: 50px;
+    }
+    h2,h4,h5 {
+        font-size:30px
+    }
+    
+</style>
+</head>
+<body>
+    <h1>Indovina la parola</h1>
+   
+    <h2 id="wordDisplay"></h2>
+    <h4>Lettere inserite: <span id="guessedLetters"></span></h4>
+    <h2 id="attempts"></h2>
+    <canvas id="hangmanCanvas" width="200" height="200"></canvas>
+    <h5 id="message"></h5>
+    <h5 id="message2"></h5>
+    <script>
+        // Parole possibili
+        var words = ["cane", "gatto", "elefante", "tigre", "leone", "orso", "lupo", "giraffa"];
+
+        // Scegli una parola a caso
+        var secretWord = words[Math.floor(Math.random() * words.length)];
+
+        // Array per tenere traccia delle lettere indovinate
+        var guessedWord = [];
+
+        // Array per tenere traccia delle lettere indovinate dall'utente
+        var guessedLetters = [];
+
+        // Numero di tentativi rimasti
+        var attemptsLeft = 6;
+
+        // Funzione per inizializzare il gioco
+        function initializeGame() {
+            for (var i = 0; i < secretWord.length; i++) {
+                guessedWord.push('___');
+            }
+            displayWord();
+            displayAttempts();
+        }
+
+        // Funzione per mostrare la parola indovinata
+        function displayWord() {
+            document.getElementById('wordDisplay').textContent = guessedWord.join(' ');
+        }
+
+        // Funzione per mostrare le lettere indovinate dall'utente
+        function displayGuessedLetters() {
+            document.getElementById('guessedLetters').textContent = guessedLetters.join(', ');
+        }
+
+        // Funzione per mostrare il numero di tentativi rimasti
+        function displayAttempts() {
+            document.getElementById('attempts').textContent = 'Tentativi rimasti: ' + attemptsLeft;
+        }
+
+        // Funzione per controllare se la lettera proposta è presente nella parola segreta
+        function checkLetter(letter) {
+            if (secretWord.includes(letter)) {
+                for (var i = 0; i < secretWord.length; i++) {
+                    if (secretWord[i] === letter) {
+                        guessedWord[i] = letter;
+                    }
+                }
+                displayWord();
+            } else {
+                attemptsLeft--;
+                drawHangman();
+                displayAttempts();
+            }
+
+            guessedLetters.push(letter);
+            displayGuessedLetters();
+
+            checkGameOver();
+        }
+
+        // Funzione per controllare se il gioco è finito
+        function checkGameOver() {
+            if (guessedWord.join('') === secretWord) {
+                document.getElementById('message').textContent = 'Bravo hai indovinato la parola!!!' ;
+                // alert('Complimenti! Hai indovinato la parola: ' + secretWord);
+            } else if (attemptsLeft === 0) {
+                document.getElementById('message2').textContent = 'Hai esaurito tutti i tentativi, la parola era:  ' + secretWord ;
+                // alert('Hai esaurito tutti i tentativi. La parola era: ' + secretWord);
+            }
+        }
+
+        // Funzione per disegnare il pendolo
+        function drawHangman() {
+            var canvas = document.getElementById('hangmanCanvas');
+            var ctx = canvas.getContext('2d');
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#fff';
+
+            // Base
+            ctx.beginPath();
+            ctx.moveTo(20, 180);
+            ctx.lineTo(180, 180);
+            ctx.stroke();
+
+            // Pendolo
+            ctx.beginPath();
+            ctx.moveTo(50, 180);
+            ctx.lineTo(50, 20);
+            ctx.lineTo(100, 20);
+            ctx.lineTo(100, 50);
+
+            if (attemptsLeft < 6) {
+                // Testa
+                ctx.beginPath();
+                ctx.arc(100, 70, 20, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            if (attemptsLeft < 5) {
+                // Corpo
+                ctx.beginPath();
+                ctx.moveTo(100, 90);
+                ctx.lineTo(100, 140);
+                ctx.stroke();
+            }
+            if (attemptsLeft < 4) {
+                // Braccio sinistro
+                ctx.beginPath();
+                ctx.moveTo(100, 100);
+                ctx.lineTo(80, 120);
+                ctx.stroke();
+            }
+            if (attemptsLeft < 3) {
+                // Braccio destro
+                ctx.beginPath();
+                ctx.moveTo(100, 100);
+                ctx.lineTo(120, 120);
+                ctx.stroke();
+            }
+            if (attemptsLeft < 2) {
+                // Gamba sinistra
+                ctx.beginPath();
+                ctx.moveTo(100, 140);
+                ctx.lineTo(80, 170);
+                ctx.stroke();
+            }
+            if (attemptsLeft < 1) {
+                // Gamba destra
+                ctx.beginPath();
+                ctx.moveTo(100, 140);
+                ctx.lineTo(120, 170);
+                ctx.stroke();
+            }
+        }
+
+        // Inizializza il gioco
+        initializeGame();
+
+        // Event listener per controllare l'input dell'utente
+        document.addEventListener('keypress', function(event) {
+            var letter = String.fromCharCode(event.keyCode).toLowerCase();
+            if (/[a-z]/.test(letter) && guessedLetters.indexOf(letter) === -1) {
+                checkLetter(letter);
+            }
+        });
+    </script>
+</body>
+</html>
