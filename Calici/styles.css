@@ -62,14 +62,14 @@ body {
 
 @keyframes rise {
     0% {
-        transform: translateY(1100%); /* Partenza dal basso del bicchiere */
+        transform: translateY(1100%); 
         opacity: 0.6;
     }
     50% {
         opacity: 0.8;
     }
     100% {
-        transform: translateY(-100%); /* Arrivo fino alla sommità del bicchiere */
+        transform: translateY(-100%); 
         opacity: 0;
     }
 }
