@@ -1,0 +1,77 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #610043;
+}
+
+.champagne-glass {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.glass-bowl {
+    width: 100px;
+    height: 150px;
+    background-color: transparent;
+    border: 10px solid #ccc;
+    border-bottom: none;
+    border-radius: 0 0 50px 50px;
+    position: relative;
+    overflow: hidden;
+    
+}
+
+.champagne {
+    width: 100%;
+    height: 100%;
+    background-color: #fdd835;
+    position: absolute;
+    bottom: 0;
+    border-radius: 0 0 50px 50px;
+    overflow: hidden;
+}
+
+.glass-stem {
+    width: 10px;
+    height: 100px;
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+.glass-base {
+    width: 60px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+.bubble {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: rise 5s infinite linear;
+}
+
+@keyframes rise {
+    0% {
+        transform: translateY(1100%); /* Partenza dal basso del bicchiere */
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100%); /* Arrivo fino alla sommità del bicchiere */
+        opacity: 0;
+    }
+}
+
+
